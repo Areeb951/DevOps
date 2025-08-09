@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres:
+    build: .
+    container_name: leave-management-postgres
+    environment:
+      POSTGRES_DB: leave_management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../../database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - leave-management-network
+
+volumes:
+  postgres_data:
+
+networks:
+  leave-management-network:
+    driver: bridge
